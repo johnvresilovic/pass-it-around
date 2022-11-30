@@ -3,21 +3,23 @@ const app = express()
 const port = 3000
 
 let numberOfBottles = 99
+let newNumber = 0
 
 app.get('/', (req, res) => {
-    res.send(numberOfBottles + ' bottles of beer on the wall...' + `<p><a href="localhost:3000/XXX">Take one down, pass it around...</a>`)
+    newNumber = numberOfBottles - 1
+    res.send(numberOfBottles + ' bottles of beer on the wall...' + `<p><a href="http://localhost:3000/${newNumber}">Take one down, pass it around...</a>`)
 })
 
 app.get('/:number_of_bottles', (req, res) => {
-    numberOfBottles = req.params.number_of_bottles
-    if (numberOfBottles == 0) {
+    newNumber = req.params.number_of_bottles
+    if (newNumber == 0) {
         numberOfBottles = 99
-        res.send('No more bottles of beer on the wall!' + `<p><a href="localhost:3000/">Click here to start over</a>`)
+        res.send('No more bottles of beer on the wall!' + `<p><a href="http://localhost:3000/">Click here to start over</a>`)
     } else {
-        if (numberOfBottles == 1) {
-            res.send(numberOfBottles + ' bottle of beer on the wall...' + `<p><a href="localhost:3000/XXX">Take one down, pass it around...</a>`) 
+        if (newNumber == 1) {
+            res.send('1 bottle of beer on the wall...' + `<p><a href="http://localhost:3000/0">Take one down, pass it around...</a>`) 
         } else {
-            res.send(numberOfBottles + ' bottles of beer on the wall...' + `<p><a href="localhost:3000/XXX">Take one down, pass it around...</a>`)
+            res.send(newNumber + ' bottles of beer on the wall...' + `<p><a href="http://localhost:3000/${newNumber - 1}">Take one down, pass it around...</a>`)
         }
     }
 })
